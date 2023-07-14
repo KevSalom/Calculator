@@ -1,50 +1,65 @@
 let SCREEN = document.querySelector('.numbers');
-const BOTONES = ['7','8','9',' / ','4','5','6',' x ','1','2','3',' - ','0','.','AC',' + ','='];
+const BOTONES = ['7', '8', '9', '/', '4', '5', '6', 'x', '1', '2', '3', '-', '0', '.', 'AC', '+', '='];
 const teclado = document.querySelector('.buttons');
+let operatorSelected = [];
 
-function click (e){
-    if(e.target.textContent === '+') {
-      SCREEN.textContent = SCREEN.textContent + ' ' + e.target.textContent + ' ';
-    } else {SCREEN.textContent = SCREEN.textContent + e.target.textContent} 
+function print(e) {
+    const current = e.target.textContent;
+    if (current === '+' || current === '-' || current === 'x' || current
+        === '/') {
+        SCREEN.textContent = SCREEN.textContent + ' ' + current + ' ';
+        operatorSelected.push(current);
+    } else {
+        SCREEN.textContent = SCREEN.textContent + current
+    }
 }
 
-function clear (){
+function clear() {
     SCREEN.textContent = '';
+    operatorSelected = [];
 }
 
-function iqual (){
-    console.log('fui llamado')
+function result() {
+ let arraySCREEN = SCREEN.textContent.split(' ');
+  
+  while(arraySCREEN.length !== 1) {
 
-    const arraySCREEN = SCREEN.textContent.split(' ')
-    let newScreen = {
-        num1: arraySCREEN[0],
-        num2: arraySCREEN[2],
-        operator: arraySCREEN[1]
-    }
-
-    if(newScreen.operator === '+'){
-        return SCREEN.textContent = Number(newScreen.num1) + Number(newScreen.num2);
-    }
+    if(operatorSelected.includes('/')){
+        const iOp = arraySCREEN.indexOf('/');
+        arraySCREEN[iOp -1] = arraySCREEN[iOp -1] / arraySCREEN[iOp +1];
+        arraySCREEN.splice(iOp,iOp + 1);
+        delete(operatorSelected[operatorSelected.indexOf('/')])
+    } else if(operatorSelected.includes('x')){
+        const iOp = arraySCREEN.indexOf('x');
+        arraySCREEN[iOp -1] = arraySCREEN[iOp -1] * arraySCREEN[iOp +1];
+        arraySCREEN.splice(iOp,iOp + 1);
+        delete(operatorSelected[operatorSelected.indexOf('x')])
+    } else if (operatorSelected.includes('+')){
+        const iOp = arraySCREEN.indexOf('+');
+        arraySCREEN[iOp -1] = Number(arraySCREEN[iOp -1]) + Number(arraySCREEN[iOp +1]);
+        arraySCREEN.splice(iOp,iOp + 1);
+        delete(operatorSelected[operatorSelected.indexOf('+')])
+    } else if(operatorSelected.includes('-')){
+        const iOp = arraySCREEN.indexOf('-');
+        arraySCREEN[iOp -1] = arraySCREEN[iOp -1] - arraySCREEN[iOp +1];
+        arraySCREEN.splice(iOp,iOp + 1);
+        delete(operatorSelected[operatorSelected.indexOf('-')])
+    } 
+  }
+    
+  return SCREEN.textContent = arraySCREEN;
 }
 
 BOTONES.forEach(b => {
     let newB = document.createElement('button');
     newB.textContent = b;
-    
-   (b !== '=')? newB.id = b : newB.id = 'iqual';
-   
-    (b !== 'AC') ? newB.onclick = click : newB.onclick = clear;
 
-    (b !== '=') ? newB.onclick = click : newB.onclick = iqual;
-    
+    (b !== '=') ? newB.id = b : newB.id = 'iqual';
+    newB.onclick = print;
+    if (b === 'AC') newB.onclick = clear;
+    if (b === '=') newB.onclick = result;
     teclado.appendChild(newB)
 })
-// const clearB = document.getElementById('c');
-// const number5 = document.getElementById('5');
-// const number6 = document.getElementById('6');
-// const operatorPlus = document.getElementById('+');
-// const operatorIqual = document.getElementById('=');
-
 
 
 
