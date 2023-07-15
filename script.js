@@ -22,29 +22,32 @@ function clear() {
 function result() {
  let arraySCREEN = SCREEN.textContent.split(' ');
   
+ console.log(arraySCREEN)
   while(arraySCREEN.length !== 1) {
 
     if(operatorSelected.includes('/')){
         const iOp = arraySCREEN.indexOf('/');
         arraySCREEN[iOp -1] = arraySCREEN[iOp -1] / arraySCREEN[iOp +1];
-        arraySCREEN.splice(iOp,iOp + 1);
+        arraySCREEN.splice(iOp,2);
         delete(operatorSelected[operatorSelected.indexOf('/')])
     } else if(operatorSelected.includes('x')){
         const iOp = arraySCREEN.indexOf('x');
         arraySCREEN[iOp -1] = arraySCREEN[iOp -1] * arraySCREEN[iOp +1];
-        arraySCREEN.splice(iOp,iOp + 1);
+        arraySCREEN.splice(iOp,2);
         delete(operatorSelected[operatorSelected.indexOf('x')])
+    } else if(operatorSelected.includes('-')){
+        const iOp = arraySCREEN.indexOf('-');
+        arraySCREEN[iOp -1] = Number(arraySCREEN[iOp -1]) - Number(arraySCREEN[iOp +1]);
+        arraySCREEN.splice(iOp,2);
+        delete(operatorSelected[operatorSelected.indexOf('-')])
     } else if (operatorSelected.includes('+')){
         const iOp = arraySCREEN.indexOf('+');
         arraySCREEN[iOp -1] = Number(arraySCREEN[iOp -1]) + Number(arraySCREEN[iOp +1]);
-        arraySCREEN.splice(iOp,iOp + 1);
+        arraySCREEN.splice(iOp,2);
         delete(operatorSelected[operatorSelected.indexOf('+')])
-    } else if(operatorSelected.includes('-')){
-        const iOp = arraySCREEN.indexOf('-');
-        arraySCREEN[iOp -1] = arraySCREEN[iOp -1] - arraySCREEN[iOp +1];
-        arraySCREEN.splice(iOp,iOp + 1);
-        delete(operatorSelected[operatorSelected.indexOf('-')])
     } 
+
+    console.log(arraySCREEN)
   }
     
   return SCREEN.textContent = arraySCREEN;
@@ -60,6 +63,4 @@ BOTONES.forEach(b => {
     if (b === '=') newB.onclick = result;
     teclado.appendChild(newB)
 })
-
-
 
