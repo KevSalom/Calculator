@@ -2,65 +2,79 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 body{
-    min-height: 100vh;
-    min-width: 100vw;
-    background-color: rgb(55, 55, 55);
+    background-color: rgb(49, 49, 49);
     display: flex;
     justify-content: center;
     align-items: center;
+    height:100vh;
 }
 
 .container{
-    background-color: rgb(41, 147, 224);
-    width: 300px;
-    height: 400px;
+    background-color:rgb(25 26 28);
+    width: 100%;
+    height:100vh;
+    max-width: 400px;
+    max-height: 800px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 10px;
 }
 
 .screen, .buttons{
     width: 100%;
     margin:10px 20px;
-    background-color: brown;
+    background-color: rgb(25 26 28);
     display: flex;
 }
 
 .screen{
     justify-content: end;
     padding: 15px;
-    font-weight: 600;
-    font-size: 20px;
-    background-color: rgb(237, 234, 133);
-    height: 80px;
+    font-size: 35px;
+    height: 25%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: end;
     align-items: end;
+    color: white;
 }
 
 .numbers{
     white-space: nowrap;
 }
 .buttons{
+    height: 75%;
     flex-wrap: wrap;
     justify-content: center;
     gap:2px;
     padding: 2px;
+
 }
 
 button{
-    width: calc(100%/4 - 2px);
-    height: 40px;
+    width: calc(100%/4 - 8px);
+    height: calc(100%/5 - 8px);
+    font-size: 40px;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    background-color: rgb(56 57 59);
+    margin: 2px;
 }
 
 #iqual{
-    width:100%;
+    width: calc(75% - 8px);
+    background-color: rgb(112 114 118);
+}
+
+.simbols{
+    background-color: rgb(233 140 44);
 }
 

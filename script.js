@@ -1,14 +1,21 @@
 let SCREEN = document.querySelector('.numbers');
-const BOTONES = ['7', '8', '9', '/', '4', '5', '6', 'x', '1', '2', '3', '-', '0', '.', 'AC', '+', '='];
+const BOTONES = ['7', '8', '9', '/', '4', '5', '6', 'x', '1', '2', '3', '-', '0', '.', 'AC', '+', '<', '='];
 const teclado = document.querySelector('.buttons');
 let operatorSelected = [];
 
 function print(e) {
     const current = e.target.textContent;
-    if (current === '+' || current === '-' || current === 'x' || current
-        === '/') {
-        SCREEN.textContent = SCREEN.textContent + ' ' + current + ' ';
-        operatorSelected.push(current);
+    const operators = ['+', '-', '/', 'x'];
+    const dot = ['.'];
+    if (operators.includes(current)) {
+        if(!operators.includes(SCREEN.textContent[SCREEN.textContent.length -2])){
+            SCREEN.textContent = SCREEN.textContent + ' ' + current + ' ';
+            operatorSelected.push(current);
+        } else {return } 
+    } else if (dot.includes(current)){ //Si la ultima letra NO es un punto y la ultima cifra NO contiene un punto
+        if(!dot.includes(SCREEN.textContent[SCREEN.textContent.length -1]) && !SCREEN.textContent.split(' ').at(-1).includes('.')){
+            SCREEN.textContent = SCREEN.textContent + current ;
+        } else {return}
     } else {
         SCREEN.textContent = SCREEN.textContent + current
     }
@@ -17,6 +24,16 @@ function print(e) {
 function clear() {
     SCREEN.textContent = '';
     operatorSelected = [];
+}
+
+function erase(){
+    const operators = ['+', '-', '/', 'x'];
+    if(operators.includes(SCREEN.textContent[SCREEN.textContent.length -2])){
+        SCREEN.textContent = SCREEN.textContent.substring(0, SCREEN.textContent.length -3)
+    } else{
+        SCREEN.textContent = SCREEN.textContent.substring(0, SCREEN.textContent.length -1)
+    }
+    
 }
 
 function result() {
@@ -46,10 +63,8 @@ function result() {
         arraySCREEN.splice(iOp,2);
         delete(operatorSelected[operatorSelected.indexOf('+')])
     } 
-
-    console.log(arraySCREEN)
   }
-    
+
   return SCREEN.textContent = arraySCREEN;
 }
 
@@ -61,6 +76,13 @@ BOTONES.forEach(b => {
     newB.onclick = print;
     if (b === 'AC') newB.onclick = clear;
     if (b === '=') newB.onclick = result;
+    if (b === '<') newB.onclick = erase;
+
+    const simbols = ['+', '-', '/', 'x'];
+
+    if(simbols.includes(b)) newB.className = 'simbols';
+
+   
     teclado.appendChild(newB)
 })
 
